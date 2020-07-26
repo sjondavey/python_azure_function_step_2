@@ -42,7 +42,9 @@ equityportfolioevolver
 ├── proxies.json                        # ____I'm not sure about this yet
 └── requirements.txt                    # Overwritten and missing the packages the original project required. File must be fixed for the deployment to work
 ```
-Manually change `launch.json`: The initial project was set up so that pressing `F5` would run **the file that had focus in VSCode**. The Azure extension want F5 to fun the Azure Function locally (including emulating the server environnement). Until the original settings are deleted, `F5` will not run correctly. 
+
+### Change the default behaviour on launch
+ In the initial project `launch.json` was set up so that pressing `F5` would run **the file that had focus in VSCode**. The Azure extension want F5 to fun the Azure Function locally (including emulating the server environnement). Until the original settings are deleted, `F5` will not run correctly. 
 
 The original `launch.json` is in the README.md file for the first step. Turing this into an Azure Project appended to it. We must delete the original configuration now to ensure `F5` works are required for testing the function locally. When you have completed editing it, it should look as follows:
 ```
@@ -61,4 +63,47 @@ The original `launch.json` is in the README.md file for the first step. Turing t
 
 Before creating any code, you should now do a quick test to make sure you can run the `hello world` boilerplate code. See the [Run the function locally](https://docs.microsoft.com/en-us/azure/azure-functions/functions-create-first-function-vs-code?pivots=programming-language-python#configure-your-environment) section of the Microsoft configuration documentation. 
 
+### Change how local functions are imported
+[For reference see here.](https://github.com/Azure/azure-functions-python-worker/issues/219)
 
+In the original `launch.json`, the project root was set as the path from which modules in the project would be imported. So for example in `portfolio.py` we used
+```python
+from equityportfolioevolver.rates.rates_evolver import RatesEvolver
+```
+Once we change `launch.json` we need to alter from these absolute (?) imports to relative imports. This line changes to the relative import
+```python
+from ..rates.rates_evolver import RatesEvolver
+```
+The tests classes do not need to be changed as their behaviour is governed by `settings.json`. Relative imports are also used in the helper code added in the function folder. For illustrative purposes the following files are added
+```
+equityportfolioevolver  
+├── .venv/                              # [Not in source control] 
+.
+.
+├── simulateEquityPortfolio/            # Folder for everything that we will need for the Azure hooks
+│   ├── __init__.py                     # changed to call single_stock_mc.py and do something more than the basic hello world example
+│   ├── function.json                   # [unchanged]
+│   ├── sample.dat                      # [unchanged]
+│   └── single_stock_mc.py              # make a simple call to the base python code
+.
+.
+└── requirements.txt                    # [unchanged]
+```
+A call to this function is made from the web browser as 
+```
+http://localhost:7071/api/simulateEquityPortfolio?isin=something&long_short=long&volume=1000&strike=16.7&ttm=1.57
+```
+
+When you look at `__init__.py` you will see that it is also possible to pass the Function a JSON input. I was not able to set this up over the URL and needed to use [Postman](https://www.postman.com) to do this. In Postman a call can be sent passing the 
+1. Parameters: Get call with the Params populated as key = isin; value = some_isin ...
+2. JSON: Call with header / Content-Type set to application / json and then Body set to raw with the input
+```
+{
+    "isin":"something",
+    "long_short":"long",
+    "volume":1000,
+    "strike":16.7,
+    "ttm":1.57
+}
+```
+[See here for some documentation](https://docs.microsoft.com/en-us/azure/azure-functions/functions-manually-run-non-http) which helped me get the JSON message working.

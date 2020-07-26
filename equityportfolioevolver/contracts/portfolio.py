@@ -1,7 +1,7 @@
 import math
 import numpy as np
 import pandas as pd
-from equityportfolioevolver.rates.rates_evolver import RatesEvolver
+from ..rates.rates_evolver import RatesEvolver
 
 
 class Portfolio():
