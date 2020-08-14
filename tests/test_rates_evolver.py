@@ -1,6 +1,6 @@
 import unittest
 import math
-from equityportfolioevolver.rates.rates_evolver import RatesEvolver
+from simulateEquityPortfolio.equityportfolioevolver.rates.rates_evolver import RatesEvolver
 
 class TestRatesEvolver(unittest.TestCase):
     def setUp(self) -> None:
