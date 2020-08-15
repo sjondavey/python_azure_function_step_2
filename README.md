@@ -94,7 +94,7 @@ http://localhost:7071/api/simulateEquityPortfolio?isin=something&long_short=long
 
 When you look at `__init__.py` you will see that it is also possible to pass the Function a JSON input. I was able to use [Postman](https://www.postman.com) to hit this part of the API call. In Postman a call can be sent passing the 
 1. Parameters: Get call with the Params populated as key = isin; value = some_isin ...
-2. JSON: PUT message with Call with header / Content-Type set to application / json and then Body set to raw with the input
+2. JSON: POST message with Call with header / Content-Type set to application / json and then Body set to raw with the input
 ```
 {"forwards":[
             {'isin': 'isin_1', 'long_short': 'long', 'volume': 1000, 'strike': 16.4, 'ttm': 1.52},
