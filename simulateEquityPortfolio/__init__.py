@@ -12,7 +12,10 @@ def simulate(req: func.HttpRequest) -> func.HttpResponse:
     portfolio_df = None
     try:
         req_body = req.get_json()
-    except AttributeError:
+        # I have encountered 2 types of errors when there is no JSON,  
+        # From Test mock GET call: AttributeError: 'NoneType' object has no attribute 'decode'
+        # When running as a Function and using HTTP Call: ValueError: HTTP request does not contain valid JSON data
+    except (AttributeError, ValueError): 
         try:
             (isin, long_short, volume, strike, ttm) = stock_forwards_mc.get_forward_data_from_single_row(req.params)
             portfolio_columns = ['isin', 'long_short', 'volume', 'strike', 'ttm']
