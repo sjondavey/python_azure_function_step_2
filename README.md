@@ -1,20 +1,17 @@
 # python_azure_function_step_2
 
-In this Step 2, I start a generic piece of Python code [this library or python code base](https://github.com/sjondavey/python_azure_function_step_1) and apply the techniques from [Microsoft's beginner tutorial](https://docs.microsoft.com/en-us/azure/developer/python/tutorial-vs-code-serverless-python-01), to expose this as an HTTP triggered Azure Function. As per Step 1, I am using Python 3 and VSCode. 
+In this Step 2, I start a generic piece of Python code [this library or python code base](https://github.com/sjondavey/python_azure_function_step_1) and apply the techniques from [Microsoft's beginner tutorial](https://docs.microsoft.com/en-us/azure/developer/python/tutorial-vs-code-serverless-python-01), to expose this as an HTTP triggered Azure Function. In step 3 I will add a blob storage trigger. As per Step 1, I am using Python 3 and VSCode and documenting all the stuff I have to google to get up and running. 
 
-Since I'm a noob, I'm documenting all the stuff I have to google to get up and running. 
-
-Azure Functions requires software and [environnement configuration](https://docs.microsoft.com/en-us/azure/azure-functions/functions-create-first-function-vs-code?pivots=programming-language-python#configure-your-environment) before you get started.
+Azure Functions in Visual Studio Code requires software and [environnement configuration](https://docs.microsoft.com/en-us/azure/azure-functions/functions-create-first-function-vs-code?pivots=programming-language-python#configure-your-environment) before you get started.
 
 ### Turn this into an Azure Function Project
 
-**Gotcha No 1: Import Statements** [You can read the official documentation here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference-python#import-behavior). The implication for working with an existing project is quite profound. To get this to work will mean moving the existing 'library' code into an intermediate folder. That will mean changes to all absolute import statements in the library and changes to the import statements in the tests.
+**Gotcha No 1: Project Structure** You can read the official documentation about folder structure [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference-python#folder-structure). The implication for working with an existing project is profound. To get this to work will mean 
+1. moving the existing 'library' code into an intermediate folder. That will mean changes to all absolute import statements in the library and changes to the import statements in the tests.
 
 Using the Azure Extension in VSCode, select the `Create a new project` icon. Choose: Current directory, language = Python; HTTP trigger; function name I used is 'simulateEquityPortfolio'; Anonymous Authorization.
 
-**Note:** 
-1. At this stage there is no blob storage. We will run this as an HTTP trigger function and output the PFE.
-2. Anonymous Authorization means this will be out 'in the wild' anyone can call it. Because there are people who 'just like to watch stuff burn' you should not leave your function exposed like this in Azure for any extended time. If the wrong person finds it and just decided to call it a lot, you could end up with a hefty bill. Since the chance this happens during dev and testing is small, I think it's fine for this stage.
+**Note:** Anonymous Authorization means this will be out 'in the wild' anyone can call it. Because there are people who 'just like to watch stuff burn' you should not leave your function exposed like this in Azure for any extended time. If the wrong person finds it and just decided to call it a lot, you could end up with a hefty bill. Since the chance this happens during dev and testing is small, I think it's fine for this stage.
 
 Now the Azure Extension is going to work its mojo. In particular it will ask to overwrite `requirements.txt` and `.gitignore`. Let it do this, we can fix this afterwards. By default the content of the new `requirements.txt` were not added to the projects virtual environment and we need to do this manually from the terminal window: `pip install azure-functions`. After this, regenerate the requirements with `pip freeze > requirements.txt` to get back all the packages used in the original project.
 

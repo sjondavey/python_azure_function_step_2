@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import json
-from .equityportfolioevolver.contracts.portfolio import Portfolio
+from .contracts.portfolio import Portfolio
 
 def get_forward_data_from_single_row(input_json: str)->tuple:
     row = (input_json)

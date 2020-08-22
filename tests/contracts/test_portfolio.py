@@ -1,6 +1,6 @@
 import unittest
 import pandas as pd
-from simulateEquityPortfolio.equityportfolioevolver.contracts.portfolio import Portfolio
+from equityportfolioevolver.contracts.portfolio import Portfolio
 
 class TestPortfolio(unittest.TestCase):
     def setUp(self) -> None:

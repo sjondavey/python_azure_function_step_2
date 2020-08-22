@@ -3,7 +3,7 @@ import json
 
 import azure.functions as func
 
-from simulateEquityPortfolio import simulate
+from equityportfolioevolver.simulateEquityPortfolioHttp import simulate
 
 class TestSimulateEquityPortfolio(unittest.TestCase):
     def setUp(self) -> None:

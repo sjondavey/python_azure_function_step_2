@@ -1,6 +1,6 @@
 import unittest
 import math
-from simulateEquityPortfolio.equityportfolioevolver.rates.rates_evolver import RatesEvolver
+from equityportfolioevolver.rates.rates_evolver import RatesEvolver
 
 class TestRatesEvolver(unittest.TestCase):
     def setUp(self) -> None:
@@ -9,7 +9,7 @@ class TestRatesEvolver(unittest.TestCase):
         self.num_paths = 10
         self.re = RatesEvolver(self.time_to_maturity, self.steps_per_path, self.num_paths)
 
-    def test_simulate_forwards(self): 
+    def test_simulate_forwards(self):
         initial_forward = 15.0
         vol = 0.2
         self.re.set_seed(42)

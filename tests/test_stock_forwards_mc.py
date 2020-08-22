@@ -1,6 +1,6 @@
 import unittest
 import json
-import simulateEquityPortfolio.stock_forwards_mc as fwd_mc
+import equityportfolioevolver.stock_forwards_mc as fwd_mc
 import pandas as pd
 from pandas._testing import assert_frame_equal
 
